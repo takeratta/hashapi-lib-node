@@ -1,0 +1,9 @@
+// some tests hit the live api, thus need real credentials
+// will mock api and remove requirement in future release
+// fill in values and rename file to config.json
+{
+    "access_token": "", // use an access_token that is over 1 hour old (expired)
+    "refresh_token": "", // a valid refresh token
+    "username": "", // valid Tierion credentials
+    "password": "" // valid Tierion credentials
+}

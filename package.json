@@ -1,10 +1,10 @@
 {
   "name": "hashapi-lib-node",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Tierion Hash API client library for Node.js",
   "main": "hashclient.js",
   "scripts": {
-    "test": "mocha test/*.js"
+    "test": "mocha test/tests.js"
   },
   "repository": {
     "type": "git",
@@ -13,6 +13,7 @@
   "keywords": [
     "tierion",
     "hash api",
+    "blockchain api",
     "api"
   ],
   "author": "Jason Bukowski <jason@tierion.com> (https://tierion.com)",
