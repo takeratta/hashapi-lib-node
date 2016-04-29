@@ -1,0 +1,31 @@
+{
+  "name": "hashapi-lib-node",
+  "version": "1.0.0",
+  "description": "Tierion Hash API client library for Node.js",
+  "main": "hashclient.js",
+  "scripts": {
+    "test": "mocha test/*.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Tierion/hashapi-lib-node.git"
+  },
+  "keywords": [
+    "tierion",
+    "hash api",
+    "api"
+  ],
+  "author": "Jason Bukowski <jason@tierion.com> (https://tierion.com)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Tierion/hashapi-lib-node/issues"
+  },
+  "homepage": "https://github.com/Tierion/hashapi-lib-node#readme",
+  "dependencies": {
+    "request": "^2.72.0"
+  },
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "sinon": "^1.17.3"
+  }
+}
