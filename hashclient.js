@@ -22,8 +22,6 @@ var HashClient = function (access_token, refresh_token) {
     }
 };
 
-HashClient.prototype.authToken = {};
-
 //////////////////////////////////////////
 // Public functions
 //////////////////////////////////////////

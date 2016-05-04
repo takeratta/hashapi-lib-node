@@ -1,6 +1,6 @@
 {
   "name": "hashapi-lib-node",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Tierion Hash API client library for Node.js",
   "main": "hashclient.js",
   "scripts": {

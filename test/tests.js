@@ -12,19 +12,17 @@ var password = config.password;
 describe("Authentication", function () {
 
     describe("No token parameters ", function () {
-        it("should initialize empty authToken object", function (done) {
+        it("authToken object undefined", function (done) {
             var hashClient = new hashclient();
-            expect(hashClient.authToken.access_token).to.equal(undefined);
-            expect(hashClient.authToken.refresh_token).to.equal(undefined);
+            expect(hashClient.authToken).to.equal(undefined);
             done();
         });
     });
 
     describe("Missing refresh token ", function () {
-        it("should initialize empty authToken object", function (done) {
+        it("authToken object undefined", function (done) {
             var hashClient = new hashclient(access_token);
-            expect(hashClient.authToken.access_token).to.equal(undefined);
-            expect(hashClient.authToken.refresh_token).to.equal(undefined);
+            expect(hashClient.authToken).to.equal(undefined);
             done();
         });
     });
