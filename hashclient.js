@@ -1,3 +1,4 @@
+/*jslint node: true */
 'use strict';
 
 var request = require('request');
@@ -31,59 +32,59 @@ HashClient.prototype.authenticate = function (username, password, callback) {
     this._getAccessTokenFromCredentials(username, password, function (err, token) {
         if (err) return callback(err);
         that.authToken = token;
-        callback(null, token)
+        callback(null, token);
     });
-}
+};
 
 HashClient.prototype.submitHashItem = function (hash, callback) {
     var parameters = {
         hash: hash
-    }
+    };
     this._httpPost(API_PATH + '/hashitems', parameters, function (err, result) {
         if (err) return callback(err);
-        callback(null, result)
-    })
+        callback(null, result);
+    });
 };
 
 HashClient.prototype.getReceipt = function (id, callback) {
     this._httpGet(API_PATH + '/receipts/' + id, function (err, result) {
         if (err) return callback(err);
-        callback(null, result)
-    })
+        callback(null, result);
+    });
 };
 
 HashClient.prototype.getBlockSubscription = function (id, callback) {
     this._httpGet(API_PATH + '/blocksubscriptions/' + id, function (err, result) {
         if (err) return callback(err);
-        callback(null, result)
-    })
+        callback(null, result);
+    });
 };
 
 HashClient.prototype.createBlockSubscription = function (callbackUrl, callback) {
     var parameters = {
         callbackUrl: callbackUrl
-    }
+    };
     this._httpPost(API_PATH + '/blocksubscriptions', parameters, function (err, result) {
         if (err) return callback(err);
-        callback(null, result)
-    })
+        callback(null, result);
+    });
 };
 
 HashClient.prototype.updateBlockSubscription = function (id, callbackUrl, callback) {
     var parameters = {
         callbackUrl: callbackUrl
-    }
+    };
     this._httpPut(API_PATH + '/blocksubscriptions/' + id, parameters, function (err, result) {
         if (err) return callback(err);
-        callback(null, result)
-    })
+        callback(null, result);
+    });
 };
 
 HashClient.prototype.deleteBlockSubscription = function (id, callback) {
     this._httpDelete(API_PATH + '/blocksubscriptions/' + id, function (err, result) {
         if (err) return callback(err);
-        callback(null, result)
-    })
+        callback(null, result);
+    });
 };
 
 //////////////////////////////////////////
@@ -105,7 +106,7 @@ HashClient.prototype._httpGet = function (url, callback) {
                 if (err) return callback(err);
                 that.authToken = token;
                 that._httpGet(url, callback);
-            })
+            });
         } else {
             if (res.statusCode >= 400) return callback(body);
             callback(null, body);
@@ -128,7 +129,7 @@ HashClient.prototype._httpPost = function (url, parameters, callback) {
                 if (err) return callback(err);
                 that.authToken = token;
                 that._httpPost(url, parameters, callback);
-            })
+            });
         } else {
             if (res.statusCode >= 400) return callback(body);
             callback(null, body);
@@ -162,7 +163,7 @@ HashClient.prototype._httpPut = function (url, parameters, callback) {
                 if (err) return callback(err);
                 that.authToken = token;
                 that._httpPut(url, parameters, callback);
-            })
+            });
         } else {
             if (res.statusCode >= 400) return callback(body);
             callback(null, body);
@@ -185,7 +186,7 @@ HashClient.prototype._httpDelete = function (url, callback) {
                 if (err) return callback(err);
                 that.authToken = token;
                 that._httpDelete(url, callback);
-            })
+            });
         } else {
             if (res.statusCode >= 400) return callback(body);
             callback(null, body);
@@ -197,21 +198,21 @@ HashClient.prototype._getAccessTokenFromCredentials = function (username, passwo
     var parameters = {
         username: username,
         password: password
-    }
+    };
     this._httpPostNoBearer(API_PATH + '/auth/token', parameters, function (err, authToken) {
         if (err) return callback(err);
-        callback(null, authToken)
-    })
+        callback(null, authToken);
+    });
 };
 
 HashClient.prototype._getAccessTokenFromRefreshToken = function (refreshToken, callback) {
     var parameters = {
         refreshToken: refreshToken
-    }
+    };
     this._httpPostNoBearer(API_PATH + '/auth/refresh', parameters, function (err, authToken) {
         if (err) return callback(err);
-        callback(null, authToken)
-    })
+        callback(null, authToken);
+    });
 };
 
 module.exports = HashClient;
