@@ -32,6 +32,8 @@ describe("Authentication", function () {
             var hashClient = new hashclient(access_token, refresh_token);
             expect(hashClient.authToken.access_token).to.equal(access_token);
             expect(hashClient.authToken.refresh_token).to.equal(refresh_token);
+            expect(hashClient.authToken.expires).to.equal(1463172090);
+            expect(hashClient.authToken.refreshingToken).to.equal(false);
             done();
         });
     });
@@ -42,6 +44,8 @@ describe("Authentication", function () {
             hashClient.authenticate(username, password, function (err, result) {
                 expect(result).to.have.property('access_token').and.to.be.a('string');
                 expect(result).to.have.property('refresh_token').and.to.be.a('string');
+                expect(result).to.have.property('expires').and.to.be.above(Math.round(new Date().getTime()/1000));
+                expect(result).to.have.property('refreshingToken').and.to.equal(false);
                 done();
             });
         });
@@ -55,6 +59,8 @@ describe("Authentication", function () {
             hashClient.submitHashItem('badhash', function (err, result) {
                 expect(hashClient.authToken.access_token).to.not.equal(access_token);
                 expect(hashClient.authToken.refresh_token).to.equal(refresh_token);
+                expect(hashClient.authToken).to.have.property('expires').and.to.be.above(Math.round(new Date().getTime()/1000));
+                expect(hashClient.authToken).to.have.property('refreshingToken').and.to.equal(false);
                 expect(err).to.have.property('error').and.to.equal('Parameter \'hash\' must be a valid SHA-256 hash.');
                 done();
             });
@@ -66,6 +72,9 @@ describe("Authentication", function () {
             hashClient.getBlockSubscription('badid', function (err, result) {
                 expect(hashClient.authToken.access_token).to.not.equal(access_token);
                 expect(hashClient.authToken.refresh_token).to.equal(refresh_token);
+                expect(hashClient.authToken.refresh_token).to.equal(refresh_token);
+                expect(hashClient.authToken).to.have.property('expires').and.to.be.above(Math.round(new Date().getTime()/1000));
+                expect(hashClient.authToken).to.have.property('refreshingToken').and.to.equal(false);
                 expect(err).to.have.property('error').and.to.equal('The request is invalid.');
                 done();
             });
@@ -77,6 +86,9 @@ describe("Authentication", function () {
             hashClient.updateBlockSubscription('badid', 'badurl', function (err, result) {
                 expect(hashClient.authToken.access_token).to.not.equal(access_token);
                 expect(hashClient.authToken.refresh_token).to.equal(refresh_token);
+                expect(hashClient.authToken.refresh_token).to.equal(refresh_token);
+                expect(hashClient.authToken).to.have.property('expires').and.to.be.above(Math.round(new Date().getTime()/1000));
+                expect(hashClient.authToken).to.have.property('refreshingToken').and.to.equal(false);
                 expect(err).to.have.property('error').and.to.equal('The request is invalid.');
                 done();
             });
@@ -101,6 +113,9 @@ describe("Authentication", function () {
             hashClient.deleteBlockSubscription('badid', function (err, result) {
                 expect(hashClient.authToken.access_token).to.equal(new_access_token);
                 expect(hashClient.authToken.refresh_token).to.equal(refresh_token);
+                expect(hashClient.authToken.refresh_token).to.equal(refresh_token);
+                expect(hashClient.authToken).to.have.property('expires').and.to.be.above(Math.round(new Date().getTime()/1000));
+                expect(hashClient.authToken).to.have.property('refreshingToken').and.to.equal(false);
                 expect(err).to.have.property('error').and.to.equal('The request is invalid.');
                 new_access_token = hashClient.authToken.access_token;
                 done();

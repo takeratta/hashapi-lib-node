@@ -2,6 +2,7 @@
 'use strict';
 
 var request = require('request');
+var jwt = require('jsonwebtoken');
 
 var API_ROOT = 'https://hashapi.tierion.com';
 var API_VERSION = '/v1';
@@ -18,7 +19,9 @@ var HashClient = function (access_token, refresh_token) {
     if (access_token && refresh_token) {
         this.authToken = {
             access_token: access_token,
-            refresh_token: refresh_token
+            refresh_token: refresh_token,
+            expires: jwt.decode(access_token).exp || 0,
+            refreshingToken: false
         };
     }
 };
@@ -31,8 +34,27 @@ HashClient.prototype.authenticate = function (username, password, callback) {
     var that = this;
     this._getAccessTokenFromCredentials(username, password, function (err, token) {
         if (err) return callback(err);
-        that.authToken = token;
-        callback(null, token);
+        that.authToken = {
+            access_token: token.access_token,
+            refresh_token: token.refresh_token,
+            expires: jwt.decode(token.access_token).exp || 0,
+            refreshingToken: false
+        };
+        callback(null, that.authToken);
+    });
+};
+
+HashClient.prototype.refreshAuthToken = function (callback) {
+    var that = this;
+    this._getAccessTokenFromRefreshToken(that.authToken.refresh_token, function (err, token) {
+        if (err) return callback(err);
+        that.authToken = {
+            access_token: token.access_token,
+            refresh_token: token.refresh_token,
+            expires: jwt.decode(token.access_token).exp || 0,
+            refreshingToken: false
+        };
+        callback(null, that.authToken);
     });
 };
 
@@ -104,7 +126,12 @@ HashClient.prototype._httpGet = function (url, callback) {
         if (res.statusCode == 401 && body.error == 'Your access token has expired.') {
             that._getAccessTokenFromRefreshToken(that.authToken.refresh_token, function (err, token) {
                 if (err) return callback(err);
-                that.authToken = token;
+                that.authToken = {
+                    access_token: token.access_token,
+                    refresh_token: token.refresh_token,
+                    expires: jwt.decode(token.access_token).exp || 0,
+                    refreshingToken: false
+                };
                 that._httpGet(url, callback);
             });
         } else {
@@ -127,7 +154,12 @@ HashClient.prototype._httpPost = function (url, parameters, callback) {
         if (res.statusCode == 401 && body.error == 'Your access token has expired.') {
             that._getAccessTokenFromRefreshToken(that.authToken.refresh_token, function (err, token) {
                 if (err) return callback(err);
-                that.authToken = token;
+                that.authToken = {
+                    access_token: token.access_token,
+                    refresh_token: token.refresh_token,
+                    expires: jwt.decode(token.access_token).exp || 0,
+                    refreshingToken: false
+                };
                 that._httpPost(url, parameters, callback);
             });
         } else {
@@ -161,7 +193,12 @@ HashClient.prototype._httpPut = function (url, parameters, callback) {
         if (res.statusCode == 401 && body.error == 'Your access token has expired.') {
             that._getAccessTokenFromRefreshToken(that.authToken.refresh_token, function (err, token) {
                 if (err) return callback(err);
-                that.authToken = token;
+                that.authToken = {
+                    access_token: token.access_token,
+                    refresh_token: token.refresh_token,
+                    expires: jwt.decode(token.access_token).exp || 0,
+                    refreshingToken: false
+                };
                 that._httpPut(url, parameters, callback);
             });
         } else {
@@ -184,7 +221,12 @@ HashClient.prototype._httpDelete = function (url, callback) {
         if (res.statusCode == 401 && body.error == 'Your access token has expired.') {
             that._getAccessTokenFromRefreshToken(that.authToken.refresh_token, function (err, token) {
                 if (err) return callback(err);
-                that.authToken = token;
+                that.authToken = {
+                    access_token: token.access_token,
+                    refresh_token: token.refresh_token,
+                    expires: jwt.decode(token.access_token).exp || 0,
+                    refreshingToken: false
+                };
                 that._httpDelete(url, callback);
             });
         } else {

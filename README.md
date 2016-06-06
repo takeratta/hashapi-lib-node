@@ -36,8 +36,19 @@ hashClient.authenticate(username, password, function(err, authToken){
         // handle the error
     } else {
         // authentication was successful
-        // access_token and refresh_token are returned in authToken
+        // access_token, refresh_token are returned in authToken
         // authToken values are saved internally and managed autmatically for the life of the HashClient 
+    }
+});
+```
+
+Once authenticated, you may choose to manually refresh your access token instead of waiting for the client to auto refresh.
+```js
+hashClient.refreshAuthToken(function(err, authToken){
+    if(err) {
+        // handle the error
+    } else {
+        // refresh was successful
     }
 });
 ```
