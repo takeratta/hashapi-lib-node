@@ -84,6 +84,16 @@ hashClient.getReceipt(id, function(err, result){
 ####BlockSubscriptions
 
 ```js
+hashClient.getAllBlockSubscriptions(function(err, result){
+    if(err) {
+        // handle the error
+    } else {
+        // process result
+    }
+});
+```
+
+```js
 hashClient.getBlockSubscription(id, function(err, result){
     if(err) {
         // handle the error
@@ -94,7 +104,10 @@ hashClient.getBlockSubscription(id, function(err, result){
 ```
 
 ```js
-hashClient.createBlockSubscription(callbackUrl, function(err, result){
+// parameters variable is an object with up to two elements ->
+// callbackUrl - REQUIRED - Your url endpoint for the block subscription callback
+// label - OPTIONAL - Label used for your own reference
+hashClient.createBlockSubscription(parameters, function(err, result){
     if(err) {
         // handle the error
     } else {
@@ -104,7 +117,10 @@ hashClient.createBlockSubscription(callbackUrl, function(err, result){
 ```
 
 ```js
-hashClient.updateBlockSubscription(id, callbackUrl, function(err, result){
+// parameters variable is an object with up to two elements ->
+// callbackUrl - OPTIONAL - Set to update callbackUrl value
+// label - OPTIONAL - Set to update label value
+hashClient.updateBlockSubscription(id, parameters, function(err, result){
     if(err) {
         // handle the error
     } else {

@@ -75,6 +75,13 @@ HashClient.prototype.getReceipt = function (id, callback) {
     });
 };
 
+HashClient.prototype.getAllBlockSubscriptions = function (callback) {
+    this._httpGet(API_PATH + '/blocksubscriptions', function (err, result) {
+        if (err) return callback(err);
+        callback(null, result);
+    });
+};
+
 HashClient.prototype.getBlockSubscription = function (id, callback) {
     this._httpGet(API_PATH + '/blocksubscriptions/' + id, function (err, result) {
         if (err) return callback(err);
@@ -82,20 +89,24 @@ HashClient.prototype.getBlockSubscription = function (id, callback) {
     });
 };
 
-HashClient.prototype.createBlockSubscription = function (callbackUrl, callback) {
-    var parameters = {
-        callbackUrl: callbackUrl
-    };
+HashClient.prototype.createBlockSubscription = function (parameters, callback) {
+    if (typeof parameters === 'string') { // handle legacy case of receiving only callbackUrl string
+        parameters = {
+            callbackUrl: parameters
+        };
+    }
     this._httpPost(API_PATH + '/blocksubscriptions', parameters, function (err, result) {
         if (err) return callback(err);
         callback(null, result);
     });
 };
 
-HashClient.prototype.updateBlockSubscription = function (id, callbackUrl, callback) {
-    var parameters = {
-        callbackUrl: callbackUrl
-    };
+HashClient.prototype.updateBlockSubscription = function (id, parameters, callback) {
+    if (typeof parameters === 'string') { // handle legacy case of receiving only callbackUrl string
+        parameters = {
+            callbackUrl: parameters
+        };
+    }
     this._httpPut(API_PATH + '/blocksubscriptions/' + id, parameters, function (err, result) {
         if (err) return callback(err);
         callback(null, result);
